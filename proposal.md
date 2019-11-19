@@ -18,4 +18,4 @@ I would like to create a simulation/game where you get to control an Ant Colony.
 - Individual AI ant colonies(could be enemies or neutral) that make descisions based on where they are located
 - 2 minigames(probably going to be grid based)
 - The ability to have a online multiplayer gamemode
-- Have a procedurally randomly generated map each time a new game is played
+- Have a new procedurally generated map each time a new game is played
