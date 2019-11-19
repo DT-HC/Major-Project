@@ -5,29 +5,49 @@
 // Extra for Experts:
 // - describe what you did to take this project "above and beyond"
 
-let seed = 0;
+
+let grid = [];
+let W = 5
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  rectMode(BOTTOM, LEFT);
+  for (let i = 0; i < windowWidth; i += W){
+    for (let j = 0; j < windowHeight; j += W)
+      grid.push(new Cell(i,j,W));
+  }
   }
 
 function draw() {
   background(220);
-  createOcean();
+  
+  
 
 }
 
-function createOcean() {
-  for (let i = 0; i < width; i + 5) {
-    createRect(i)
+class Worker {
+
+}
+
+class Queen {
+
+}
+
+class Cells {
+  constructor(Cellx, Celly,Cellw){
+    this.x = Cellx;
+    this.y = Celly;
+    this.width = Cellw;
+}
+  display() {
+    fill(220)
+    rect(this.x, this.y, this.width, this.width)
   }
-}
 
-function createRect(xPos) {
-  length = noise(seed)*(-height);
-  fill(0)
-  rect(xPos,height,5,length);
-  seed += 0.5;
 
 }
+
+
+
+
+
+
