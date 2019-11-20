@@ -7,20 +7,42 @@
 
 
 let grid = [];
-let W = 5
+let W = 50
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
   for (let i = 0; i < windowWidth; i += W){
     for (let j = 0; j < windowHeight; j += W)
-      grid.push(new Cell(i,j,W));
+      grid.push(new Cells(i,j,W));
   }
   }
 
 function draw() {
-  background(220);
+  for (let i = 0; i < grid.length; i++){
+    grid[i].display()
+  }
   
   
+
+}
+
+
+class Cells {
+  constructor(Cellx, Celly,Cellw){
+    this.x = Cellx;
+    this.y = Celly;
+    this.width = Cellw;
+}
+  display() {
+    if (((mouseX < this.x + this.width && mouseX > this.x) && (mouseY > this.y && mouseY < this.width + this.y)) && mouseIsPressed){
+      fill(0)
+  }
+  else {
+    fill(220)
+  }
+    rect(this.x, this.y, this.width, this.width)
+  }
+
 
 }
 
@@ -32,19 +54,7 @@ class Queen {
 
 }
 
-class Cells {
-  constructor(Cellx, Celly,Cellw){
-    this.x = Cellx;
-    this.y = Celly;
-    this.width = Cellw;
-}
-  display() {
-    fill(220)
-    rect(this.x, this.y, this.width, this.width)
-  }
 
-
-}
 
 
 
