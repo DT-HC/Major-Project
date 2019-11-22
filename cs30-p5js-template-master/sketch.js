@@ -13,6 +13,7 @@ let worker;
 function setup() {
   createCanvas(windowWidth, windowHeight);
   rectMode(CENTER);
+  angleMode(DEGREES);
   
   for (let i = 0; i < windowWidth; i += W){
     for (let j = 0; j < windowHeight; j += W)
@@ -27,8 +28,8 @@ function draw() {
   for (let i = 0; i < grid.length; i++){
     grid[i].display()
   }
-  worker.display()
   worker.move()
+  worker.display()
   
   
 
@@ -40,14 +41,18 @@ class Cells {
     this.x = Cellx;
     this.y = Celly;
     this.width = Cellw;
+    this.fill = 220
 }
   display() {
-    if ((dist(worker.x, worker.y, this.x, this.y) < W/2) && mouseIsPressed){
-      fill(0)
+    if ((dist(worker.x, worker.y, this.x, this.y) < W/2)){
+      this.fill = 220
+      fill(this.fill)
   }
     else {
-    fill(220)
+      this.fill = 220
+      fill(this. fill)
   }
+    
     rect(this.x, this.y, this.width, this.width)
   }
 
@@ -58,38 +63,41 @@ class Worker {
   constructor() {
     this.width = 4;
     this.length = 8;
-    this.x = 110;
-    this.y = 50;
+    this.x = width/2
+    this.y = height/2
     this.xLoc = floor(this.x/W)
     this.yLoc = floor(this.y/W)
     this.stepSize = 2;
+    this.a = 90
   }
 
   display() {
     fill(0)
+    translate(this.x - this.width/2, this.y + this.height/2);
+    this.a = atan2(mouseY - this.y, mouseX - this.x )
+    rotate(this.a)
     rect(this.x,this.y, this.width, this.length)
   }
   move() {
-    let choice = random(100);
-    if (choice < 25) {
-      //up
-      this.y -= this.stepSize;
-    }
-    else if (choice < 50) {
-      //down
-      this.y += this.stepSize;
-    }
-    else if (choice < 75) {
-      //left
-      this.x -= this.stepSize;
-    }
-    else {
-      //right
-      this.x += this.stepSize;
-    
-  }
+    // if (choice < 25) {
+    //   //up
+    //   this.y -= this.stepSize;
+    // }
+    // else if (choice < 50) {
+    //   //down
+    //   this.y += this.stepSize;
+    // }
+    // else if (choice < 75) {
+    //   //left
+    //   this.x -= this.stepSize;
+    // }
+    // else {
+    //   //right
+    //   this.x += this.stepSize;
+    // this.a = atan2(choice - this.x, choice-this.y)
+    // rotate(this.a)
 
-}
+ }
 }
 
 
