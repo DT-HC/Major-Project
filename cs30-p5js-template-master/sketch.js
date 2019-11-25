@@ -20,7 +20,9 @@ function setup() {
       grid.push(new Cells(i,j,W));
   }
   
-   worker = new Worker
+   worker = new Worker(10,10);
+   dworker = new Worker(500,110);
+   
   }
 
 function draw() {
@@ -28,8 +30,9 @@ function draw() {
   for (let i = 0; i < grid.length; i++){
     grid[i].display()
   }
-  worker.move()
+  dworker.display()
   worker.display()
+  
   
   
 
@@ -60,11 +63,11 @@ class Cells {
 }
 
 class Worker {
-  constructor() {
+  constructor(workerX, workerY) {
     this.width = 4;
     this.length = 8;
-    this.x = width/2
-    this.y = height/2
+    this.x = workerX
+    this.y = workerY
     this.xLoc = floor(this.x/W)
     this.yLoc = floor(this.y/W)
     this.stepSize = 2;
@@ -73,10 +76,13 @@ class Worker {
 
   display() {
     fill(0)
-    translate(this.x - this.width/2, this.y + this.height/2);
-    this.a = atan2(mouseY - this.y, mouseX - this.x )
-    rotate(this.a)
-    rect(this.x,this.y, this.width, this.length)
+    push()
+    translate(this.x , this.y);
+    this.a = atan2(mouseY - this.y, mouseX - this.x );
+    rotate(this.a - 90);
+    rectMode(CENTER);
+    rect(0,0, this.width, this.length);
+    pop()
   }
   move() {
     // if (choice < 25) {
