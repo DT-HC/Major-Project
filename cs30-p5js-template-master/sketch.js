@@ -18,10 +18,11 @@ function setup() {
   for (let i = 0; i < windowWidth; i += W){
     for (let j = 0; j < windowHeight; j += W)
       grid.push(new Cells(i,j,W));
+      grid 
   }
   
    worker = new Worker(10,10);
-   dworker = new Worker(500,110);
+   dworker = new Worker(500,100);
    
   }
 
@@ -30,7 +31,9 @@ function draw() {
   for (let i = 0; i < grid.length; i++){
     grid[i].display()
   }
+  dworker.move()
   dworker.display()
+  worker.move()
   worker.display()
   
   
@@ -47,7 +50,7 @@ class Cells {
     this.fill = 220
 }
   display() {
-    if ((dist(worker.x, worker.y, this.x, this.y) < W/2)){
+    if ((dist(dworker.x, dworker.y, this.x, this.y) < W/2) || (dist(worker.x, worker.y, this.x, this.y) < W/2)){
       this.fill = 220
       fill(this.fill)
   }
@@ -76,32 +79,38 @@ class Worker {
 
   display() {
     fill(0)
-    push()
-    translate(this.x , this.y);
-    this.a = atan2(mouseY - this.y, mouseX - this.x );
-    rotate(this.a - 90);
-    rectMode(CENTER);
+    // push()
+    // translate(this.x , this.y);
+    // this.a = atan2(mouseY - this.y, mouseX - this.x );
+    // rotate(this.a - 90);
+    // rectMode(CENTER);
     rect(0,0, this.width, this.length);
     pop()
   }
   move() {
-    // if (choice < 25) {
-    //   //up
-    //   this.y -= this.stepSize;
-    // }
-    // else if (choice < 50) {
-    //   //down
-    //   this.y += this.stepSize;
-    // }
-    // else if (choice < 75) {
-    //   //left
-    //   this.x -= this.stepSize;
-    // }
-    // else {
-    //   //right
-    //   this.x += this.stepSize;
-    // this.a = atan2(choice - this.x, choice-this.y)
-    // rotate(this.a)
+    push()
+    translate(this.x , this.y);
+    for (let i = 0; i < grid.length; i++) {
+      if (dist(this.x, this.y, grid[i].x, grid[i].y) < W/2){
+        let choice = random(1,4);
+        if (choice = 1) {
+          this.a = atan2((grid[i].y + W) - this.y, (grid[i].x) - this.x)
+        }
+        else if (choice = 2) {
+          this.a = atan2((grid[i].y - W) - this.y, (grid[i].x) - this.x)
+        }
+        else if (choice = 3) {
+          this.a = atan2((grid[i].y) - this.y, (grid[i].x + W) - this.x)
+        }
+        else if (choice = 4) {
+          this.a = atan2((grid[i].y) - this.y, (grid[i].x - W) - this.x)
+        }
+
+      }
+    }
+    // this.a = atan2(mouseY - this.y, mouseX - this.x );
+    rotate(this.a - 90);
+    rectMode(CENTER);
 
  }
 }
