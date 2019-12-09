@@ -46,11 +46,11 @@ class Cells {
     this.y = Celly;
     this.width = Cellw;
     this.fill = 220;
-    this.state = "yes"
+    this.state = "!occupied"
 }
   display() {
-    if ((dist(dworker.x, dworker.y, this.x, this.y) < W/2) || (dist(worker.x, worker.y, this.x, this.y) < W/2)){
-      this.fill = 220
+    if (this.state === "occupied"){
+      this.fill = 0
       fill(this.fill)
   }
     else {
@@ -70,8 +70,8 @@ class Worker {
     this.length = 8;
     this.x = workerX
     this.y = workerY
-    this.xLoc = floor(this.x/W)
-    this.yLoc = floor(this.y/W)
+    this.xLoc = floor(this.x/W);
+    this.yLoc = floor(this.y/W);
     this.stepSize = 2;
     this.a = 90;
     this.choice = 1;
@@ -90,22 +90,26 @@ class Worker {
   move() {
     push()
     translate(this.x , this.y);
-     this.choice = random(1,4)
+    this.choice = random(1,4)
     for (let i = 0; i < grid.length; i++) {
       if (this.xLoc === grid[i].x && this.yLoc === grid[i].y){
         // let choice = random(1,4);
-        if (this.choice = 1) {
-          this.a = atan2((grid[i].y + W) - this.y, (grid[i].x) - this.x)
-        }
-        else if (this.choice = 2) {
-          this.a = atan2((grid[i].y - W) - this.y, (grid[i].x) - this.x)
-        }
-        else if (this.choice = 3) {
-          this.a = atan2((grid[i].y) - this.y, (grid[i].x + W) - this.x)
-        }
-        else if (this.choice = 4) {
-          this.a = atan2((grid[i].y) - this.y, (grid[i].x - W) - this.x)
-        }
+        grid[i].state = "occupied";
+        
+        
+        
+        // if (this.choice = 1) {
+        //   this.a = atan2((grid[i].y + W) - this.y, (grid[i].x) - this.x)
+        // }
+        // else if (this.choice = 2) {
+        //   this.a = atan2((grid[i].y - W) - this.y, (grid[i].x) - this.x)
+        // }
+        // else if (this.choice = 3) {
+        //   this.a = atan2((grid[i].y) - this.y, (grid[i].x + W) - this.x)
+        // }
+        // else if (this.choice = 4) {
+        //   this.a = atan2((grid[i].y) - this.y, (grid[i].x - W) - this.x)
+        // }
 
       }
     }
