@@ -7,7 +7,7 @@
 
 
 let grid = [];
-let W = 50;
+let W = 6;
 let worker;
 
 function setup() {
@@ -21,8 +21,7 @@ function setup() {
   }
   worker = new Worker(100,100);
   dworker = new Worker(100, 200);
-
-  }
+}
 
 function draw() {
   translate(W/2, W/2)
@@ -33,6 +32,7 @@ function draw() {
   dworker.display()
   worker.move()
   worker.display()
+  Scroll(mouseX, mouseY)
   
   
   
@@ -51,12 +51,12 @@ class Cells {
   display() {
     if (this.state === "occupied"){
       this.fill = 0
-      fill(this.fill)
+      
   }
     else {
       this.fill = 220
-      fill(this. fill)
-  }
+    }
+    fill(this. fill)
     
     rect(this.x, this.y, this.width, this.width)
   }
@@ -95,29 +95,25 @@ class Worker {
       if (this.xLoc === grid[i].x && this.yLoc === grid[i].y){
         // let choice = random(1,4);
         grid[i].state = "occupied";
-        
-        
-        
-        // if (this.choice = 1) {
-        //   this.a = atan2((grid[i].y + W) - this.y, (grid[i].x) - this.x)
-        // }
-        // else if (this.choice = 2) {
-        //   this.a = atan2((grid[i].y - W) - this.y, (grid[i].x) - this.x)
-        // }
-        // else if (this.choice = 3) {
-        //   this.a = atan2((grid[i].y) - this.y, (grid[i].x + W) - this.x)
-        // }
-        // else if (this.choice = 4) {
-        //   this.a = atan2((grid[i].y) - this.y, (grid[i].x - W) - this.x)
-        // }
+
+        // this.angle = atan2(grid[i].y - this.y, (grid[i].x + 50) - this.x)
 
       }
+      
+      this.angle = atan2(grid[i].y - this.y, (grid[i].x + 50) - this.x)
     }
     // this.a = atan2(mouseY - this.y, mouseX - this.x );
-    rotate(this.a - 90);
+    rotate(this.angle - 90);
     rectMode(CENTER);
 
  }
+}
+
+function Scroll(scrollX, scrollY){
+  if (scrollX > Windowwidth) {
+    translate(0, windowWidth+= 4)
+  }
+
 }
 
 
