@@ -28,17 +28,16 @@ function draw() {
   for (let i = 0; i < grid.length; i++){
     grid[i].display()
   }
-  dworker.move()
-  dworker.display()
-  worker.move()
-  worker.display()
-  Scroll(mouseX, mouseY)
-  
+  // dworker.move()
+  // dworker.display()
+  // worker.move()
+  // worker.display()
+  // scroll(mouseX)
+  translate(0, width)
   
   
 
 }
-
 
 class Cells {
   constructor(Cellx, Celly,Cellw,){
@@ -109,9 +108,10 @@ class Worker {
  }
 }
 
-function Scroll(scrollX, scrollY){
-  if (scrollX > Windowwidth) {
-    translate(0, windowWidth+= 4)
+function Scroll(scrollX){
+  if (scrollX > width - 10) {
+    
+
   }
 
 }
