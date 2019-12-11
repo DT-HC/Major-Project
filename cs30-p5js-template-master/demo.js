@@ -6,116 +6,89 @@
 // - describe what you did to take this project "above and beyond"
 
 
-let grid = [];
-let W = 100;
-let worker;
+let ballArray = [];
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  rectMode(CENTER);
-  angleMode(DEGREES);
-  
-  for (let i = 0; i < windowWidth; i += W){
-    for (let j = 0; j < windowHeight; j += W)
-      grid.push(new Cells(i,j,W));
-      grid 
-  }
-  
-   worker = new Worker(10,10);
-   dworker = new Worker(500,100);
-   
-  }
+
+  ballArray.push(new Ball(width/2, height/2, random(-15, 15), random(-15, 15), 25));
+}
 
 function draw() {
-  translate(W/2, W/2)
-  for (let i = 0; i < grid.length; i++){
-    grid[i].display()
-  }
-  dworker.move()
-  dworker.display()
-  worker.move()
-  worker.display()
-  
-  
-  
+  background(255);
+  for (let i = 0; i < ballArray.length; i++) {
+    ballArray[i].move();
 
-}
-
-
-class Cells {
-  constructor(Cellx, Celly,Cellw){
-    this.x = Cellx;
-    this.y = Celly;
-    this.width = Cellw;
-    this.fill = 220;
-    this.state = ""
-}
-  display() {
-    if ((dist(dworker.x, dworker.y, this.x, this.y) < W/2) || (dist(worker.x, worker.y, this.x, this.y) < W/2)){
-      this.fill = 220
-      fill(this.fill)
-  }
-    else {
-      this.fill = 220
-      fill(this. fill)
-  }
-    
-    rect(this.x, this.y, this.width, this.width)
-  }
-
-
-}
-
-class Worker {
-  constructor(workerX, workerY) {
-    this.width = 4;
-    this.length = 8;
-    this.x = workerX
-    this.y = workerY
-    this.xLoc = floor(this.x/W)
-    this.yLoc = floor(this.y/W)
-    this.stepSize = 2;
-    this.a = 90
-  }
-
-  display() {
-    fill(0)
-    // push()
-    // translate(this.x , this.y);
-    // this.a = atan2(mouseY - this.y, mouseX - this.x );
-    // rotate(this.a - 90);
-    // rectMode(CENTER);
-    rect(0,0, this.width, this.length);
-    pop()
-  }
-  move() {
-    push()
-    translate(this.x , this.y);
-    for (let i = 0; i < grid.length; i++) {
-      if (dist(this.x, this.y, grid[i].x, grid[i].y) < W/2){
-        let choice = random(1,4);
-        if (choice = 1) {
-          this.a = atan2((grid[i].y + W) - this.y, (grid[i].x) - this.x)
-        }
-        else if (choice = 2) {
-          this.a = atan2((grid[i].y - W) - this.y, (grid[i].x) - this.x)
-        }
-        else if (choice = 3) {
-          this.a = atan2((grid[i].y) - this.y, (grid[i].x + W) - this.x)
-        }
-        else if (choice = 4) {
-          this.a = atan2((grid[i].y) - this.y, (grid[i].x - W) - this.x)
-        }
-
+    //collision check
+    for (let j = 0; j <ballArray.length; j++) {
+      if (i !== j && ballArray[i].checkForCollision(ballArray[j]) ) {
+        // ballArray[i].fillColor = color(255, 0, 0);
+        // ballArray[j].fillColor = color(255, 0, 0);
+        
+        let tempDx = ballArray[i].dx;
+        let tempDy = ballArray[i].dy;
+        ballArray[i].dx = ballArray[j].dx;
+        ballArray[i].dy = ballArray[j].dy;
+        ballArray[j].dx = tempDx;
+        ballArray[j].dy = tempDy;
       }
     }
-    // this.a = atan2(mouseY - this.y, mouseX - this.x );
-    rotate(this.a - 90);
-    rectMode(CENTER);
 
- }
+    ballArray[i].display();
+  }
 }
 
+function keyPressed() {
+  if (key === " ") {
+    ballArray.push(new Ball(mouseX, mouseY, random(-15, 15), random(-15, 15), 25));
+  }
+}
+
+function windowResized() {
+  setup();
+}
+
+class Ball {
+  constructor(x, y, dx, dy, radius) {
+    this.x = x;
+    this.y = y;
+    this.dx = dx;
+    this.dy = dy;
+    this.radius = radius;
+    this.fillColor = color(0);
+  }
+
+  move() {
+    // move
+    this.x += this.dx;
+    this.y += this.dy;
+
+    // bounce if needed
+    if (this.x > width - this.radius/2 || this.x < 0 + this.radius/2) {
+      this.dx *= -1;
+    }
+  
+    if (this.y > height - this.radius/2 || this.y < 0 + this.radius/2) {
+      this.dy *= -1;
+    }
+  }
+
+  display() {
+    fill(this.fillColor);
+    circle(this.x, this.y, this.radius * 2);
+  }
+
+  checkForCollision(anotherBall) {
+    let distanceBetweenCenters = dist(this.x, this.y, anotherBall.x, anotherBall.y);
+    let sumOfRadii = this.radius + anotherBall.radius;
+    if (distanceBetweenCenters < sumOfRadii) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+}
 
 
 
