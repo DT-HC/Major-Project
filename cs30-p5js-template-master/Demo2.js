@@ -7,8 +7,9 @@
 
 
 let grid = [];
+let gridLoc = []
 let W = 6;
-let worker; 
+let workers; 
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -16,10 +17,14 @@ function setup() {
   angleMode(DEGREES);
   
   for (let i = 0; i < windowWidth; i += W){
-    for (let j = 0; j < windowHeight; j += W)
-      grid.push(new Cells(i,j,W)); 
+    gridLoc.push([]);
+    for (let j = 0; j < windowHeight; j += W){
+      gridLoc[i].push(j);
+      grid.push(new Cells(i,j,W));
+    } 
   }
 }
+
 
 function draw() {
   translate(W/2, W/2)
@@ -47,7 +52,8 @@ class Cells {
 
 }
 
-class Worker {}
+
+
 
 
 
