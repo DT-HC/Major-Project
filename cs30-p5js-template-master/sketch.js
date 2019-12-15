@@ -7,8 +7,8 @@
 
 
 let grid = [];
-let W = 50;
-let worker;
+let W = 20;
+let workers = []
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -18,17 +18,19 @@ function setup() {
     for (let j = 0; j < windowHeight; j += W)
       grid.push(new Cells(i,j,W));
   }
-  
-   worker = new Worker
+  for (let i = 0; i < 3; i += W)
+    workers.push(new Worker);
   }
 
 function draw() {
-  translate(W/2, W/2)
+  translate(W/2, W/2);
   for (let i = 0; i < grid.length; i++){
     grid[i].display()
   }
-  worker.display()
-  worker.move()
+  for (let i = 0; i < workers.length; i++){
+    workers[i].display()
+    workers[i].move()
+  }
   
   
 
@@ -42,7 +44,7 @@ class Cells {
     this.width = Cellw;
 }
   display() {
-    if ((dist(worker.x, worker.y, this.x, this.y) < W/2) && mouseIsPressed){
+    if ((dist(worker.x, worker.y, this.x, this.y) < W/2)){
       fill(0)
   }
     else {
@@ -62,7 +64,7 @@ class Worker {
     this.y = 50;
     this.xLoc = floor(this.x/W)
     this.yLoc = floor(this.y/W)
-    this.stepSize = 2;
+    this.stepSize = 5;
   }
 
   display() {
