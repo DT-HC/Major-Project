@@ -7,9 +7,12 @@
 
 
 let grid = [];
-let gridLoc = []
-let W = 6;
-let workers; 
+let gridLoc = [];
+let W = 50;
+let workers;
+let seed = 0;
+
+
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -19,7 +22,7 @@ function setup() {
   for (let i = 0; i < windowWidth; i += W){
     gridLoc.push([]);
     for (let j = 0; j < windowHeight; j += W){
-      gridLoc[i].push(j);
+      // gridLoc[i].push(j);
       grid.push(new Cells(i,j,W));
     } 
   }
@@ -33,7 +36,7 @@ function draw() {
   }
   
   
-
+  
 }
 
 class Cells {
@@ -42,10 +45,17 @@ class Cells {
     this.y = Celly;
     this.width = Cellw;
     this.fill = 220;
-    this.state = "!occupied"
+    
+    
 }
   display() {
-    fill(this. fill)
+    if (dist(this.x, this.y, mouseX, mouseY) < W/2) {
+      this.fill = 0;
+    }
+    else{
+      this.fill = 220;
+    }
+    fill(this.fill)
     rect(this.x, this.y, this.width, this.width)
   }
 

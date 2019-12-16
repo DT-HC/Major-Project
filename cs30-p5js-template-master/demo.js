@@ -22,8 +22,8 @@ function draw() {
     //collision check
     for (let j = 0; j <ballArray.length; j++) {
       if (i !== j && ballArray[i].checkForCollision(ballArray[j]) ) {
-        // ballArray[i].fillColor = color(255, 0, 0);
-        // ballArray[j].fillColor = color(255, 0, 0);
+         ballArray[i].fillColor = color(255, 0, 0);
+         ballArray[j].fillColor = color(255, 0, 0);
         
         let tempDx = ballArray[i].dx;
         let tempDy = ballArray[i].dy;
