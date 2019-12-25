@@ -44,7 +44,7 @@ class Cells {
     this.width = Cellw;
 }
   display() {
-    if ((dist(worker.x, worker.y, this.x, this.y) < W/2)){
+    if ((dist(workers[0].x, workers[0].y, this.x, this.y) < W/2)){
       fill(0)
   }
     else {
