@@ -6,89 +6,99 @@
 // - describe what you did to take this project "above and beyond"
 
 
-let ballArray = [];
+let workerNum;
+let food;
+let state = "start";
+let queen;
+
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-
-  ballArray.push(new Ball(width/2, height/2, random(-15, 15), random(-15, 15), 25));
+  queen = new Queen(40,40);
 }
 
 function draw() {
   background(255);
-  for (let i = 0; i < ballArray.length; i++) {
-    ballArray[i].move();
+  if (state === "nGame"){
+    playGame()
+  }
+  else if (state === "start"){
+    showMenu();
+  }
+  
+}
 
-    //collision check
-    for (let j = 0; j <ballArray.length; j++) {
-      if (i !== j && ballArray[i].checkForCollision(ballArray[j]) ) {
-         ballArray[i].fillColor = color(255, 0, 0);
-         ballArray[j].fillColor = color(255, 0, 0);
-        
-        let tempDx = ballArray[i].dx;
-        let tempDy = ballArray[i].dy;
-        ballArray[i].dx = ballArray[j].dx;
-        ballArray[i].dy = ballArray[j].dy;
-        ballArray[j].dx = tempDx;
-        ballArray[j].dy = tempDy;
-      }
+function playGame(){
+  queen.display()
+  let mouseState = "qControl";
+
+  
+  
+
+}
+function showMenu(){
+  
+  
+  textSize(50)
+  fill(0);
+  text('START', width/2, height/2, 100, 100);
+  
+  textSize(26);
+  text('INSTRUCTIONS', width/2, height/2 + 100, 100, 100);
+  
+}
+
+
+function mouseClicked() {
+  if (state == "start") {
+    if (mouseX > width/2 && mouseX < width/2 + 100 && mouseY > height/2 && mouseY < height/2 + 100){
+      state = "nGame"  
     }
-
-    ballArray[i].display();
   }
 }
 
-function keyPressed() {
-  if (key === " ") {
-    ballArray.push(new Ball(mouseX, mouseY, random(-15, 15), random(-15, 15), 25));
-  }
-}
 
-function windowResized() {
-  setup();
-}
 
-class Ball {
-  constructor(x, y, dx, dy, radius) {
+class Queen {
+  constructor(x, y){
     this.x = x;
     this.y = y;
-    this.dx = dx;
-    this.dy = dy;
-    this.radius = radius;
-    this.fillColor = color(0);
+    this.rate;
+    this.saturation = 0;
+    this.hunger = 0;
+    this.health = 40;
+    this.objectiveX;
+    this.objectiveY;
+    this.angle;
+    this.speed = 8;
   }
-
-  move() {
-    // move
-    this.x += this.dx;
-    this.y += this.dy;
-
-    // bounce if needed
-    if (this.x > width - this.radius/2 || this.x < 0 + this.radius/2) {
-      this.dx *= -1;
-    }
-  
-    if (this.y > height - this.radius/2 || this.y < 0 + this.radius/2) {
-      this.dy *= -1;
-    }
+  display(){
+    fill(0);
+    ellipse(this.x,this.y, 30, 30)
   }
-
-  display() {
-    fill(this.fillColor);
-    circle(this.x, this.y, this.radius * 2);
-  }
-
-  checkForCollision(anotherBall) {
-    let distanceBetweenCenters = dist(this.x, this.y, anotherBall.x, anotherBall.y);
-    let sumOfRadii = this.radius + anotherBall.radius;
-    if (distanceBetweenCenters < sumOfRadii) {
-      return true;
-    }
-    else {
-      return false;
-    }
+  move(){
+    this.angle = atan2(this.objectiveY - mouseY, this.objectiveX - mouseX);
+    this.x += this.speed*cos(this.angle);
+    this.y += this.speed*sin(this.angle)
   }
 }
+
+function mousePressed(){
+  if (state = "nGame") {
+    if (mouseState = "qControl")
+      queen.objectiveX = mouseX;
+      queen.objectiveY = mouseY;
+  }
+
+}
+
+function keyPressed(){
+  if (key = "M"){
+    queen.move();
+    
+  }
+}
+
 
 
 

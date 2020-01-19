@@ -7,10 +7,10 @@
 
 
 let grid = [];
-let gridLoc = [];
-let W = 50;
-let workers;
-let seed = 0;
+// // let gridLoc = [];
+// // let W = 50;
+// // let workers;
+// // let seed = 0;
 
 
 
