@@ -77,9 +77,13 @@ class Queen {
     ellipse(this.x,this.y, 30, 30)
   }
   move(){
-    this.angle = atan2(this.objectiveY - mouseY, this.objectiveX - mouseX);
-    this.x += this.speed*cos(this.angle);
-    this.y += this.speed*sin(this.angle)
+    while(queen.x !== queen.objectiveX && queen.y !== queen.objectiveY){
+      
+    
+      this.angle = atan2(this.objectiveY - this.y, this.objectiveX - this.x);
+      this.x += this.speed*cos(this.angle);
+      this.y += this.speed*sin(this.angle)
+    }
   }
 }
 
@@ -93,7 +97,7 @@ function mousePressed(){
 }
 
 function keyPressed(){
-  if (key = "M"){
+  if (keyCode === 77){
     queen.move();
     
   }
